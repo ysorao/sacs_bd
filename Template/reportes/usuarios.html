@@ -1,0 +1,95 @@
+{%extends 'template.html'%}
+
+{%block title%}Reporte de usuarios registrados{%endblock title%}
+
+{%block sidebar%}
+<ul class="navbar-nav bg-gradient sidebar sidebar-dark accordion" style="background-color: gainsboro;"
+    id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="login.html">
+        <img src="../../static/img/logo.png" style="height: 250%" alt="Logo HeOn">
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-4 mb-4">
+
+    <!-- Heading -->
+    <div class="sidebar-heading" style="color: black">
+
+    </div>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="/usuarios/registrar-usuario" style="color: black;">
+            <i class="fas fa-user" style="color: black"></i>
+            <span>Registrar usuario</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Utilities Collapse Menu -->
+    <li class="nav-item active">
+        <a class="nav-link" href="" style="color: black" aria-expanded="true" aria-controls="collapseUtilities">
+            <i class="fas fa-users-cog" style="color: black"></i>
+            <span>Reporte de usuarios</span>
+        </a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block black">
+
+</ul>
+<!-- End of Sidebar -->
+{%endblock sidebar%}
+
+{%block content%}
+<div class="container-fluid">
+    <!-- Encabezado de tabla -->
+    <h1 class="h3 mb-2 text-gray-800" style="text-align: center">Usuarios registrados</h1>
+    <p class="mb-4">Aquí puede verificar los datos y el estado de los usuarios registrados, así como generar un archivo de 
+        tipo hoja de cálculo con esta información.</p>
+    <!-- Tabla usuarios -->
+    {% if sp_listausuarios %}
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Listado general</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead class="text-center">
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre</th>
+                            <th>Documento</th>
+                            <th>Fecha registro</th>
+                        </tr>
+                    </thead>
+                    <tfoot class="text-center">
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre</th>
+                            <th>Documento</th>
+                            <th>Fecha registro</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% for usuario in sp_listausuarios %}
+                            <tr class="text-center"></tr>
+                                <td class="text-center">{{ usuario.0 }}</td>
+                                <td class="text-center">{{usuario.1}} {{usuario.3}}</td>
+                                <td class="text-center">{{ usuario.5 }}</td>
+                                <td class="text-center">{{ usuario.7 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <a href="{%url 'reportes:reporte_usuarios' %}">Descargar listado de usuarios registrados.</a>
+        </div>
+        {% else %}
+        <h1>No hay usuarios registrados...</h1>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,144 @@
+{%extends 'reportes/jobs_bck.html'%}
+
+{%block title%}Últimos backup generados{%endblock title%}
+
+{%block links%}
+<li class="nav-item">
+    <a class="nav-link collapsed" href="/reportes/cumplimiento_bck/" style="color: black;">
+        <i class="fas fa-calendar-check" style="color: black; font-size: 0.8rem;"></i>
+        <span>Ejecución bck programados</span>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link collapsed" href="/reportes/jobs_bck/" style="color: black;">
+        <i class="fas fa-clipboard-check" style="color: black;"></i>
+        <span>Resultado jobs de backup</span>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="/reportes/archivos_bak/">
+        <i class="fas fa-copy" style="color: black"></i>
+        <span style="color: black">Archivos .bak generados</span>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="/reportes/estado_db/" style="color: black" aria-expanded="true"
+        aria-controls="collapseUtilities">
+        <i class="fas fa-database" style="color: black"></i>
+        <span>Estado de las B.D.</span>
+    </a>
+</li>
+
+<li class="nav-item active">
+    <a class="nav-link" href="">
+        <i class="fas fa-clone" style="color: black;"></i>
+        <span style="color: black; font-size: 0.8rem;">Último backup de cada B.D.</span>
+    </a>
+</li>
+{%endblock links%}
+
+{%block content%}
+<div class="container-fluid">
+    <!-- Encabezado de tabla -->
+    <h1 class="h3 mb-2 text-gray-800" style="text-align: center">Último backup por base de datos</h1></br>
+    <p class="mb-4">Esta función le permite consultar la fecha de la última copia de seguridad generada a cada base de 
+        datos alojada en las diferentes instancias y determinar así cuales se ejecutan actualmente, cuales se deberían
+        incluir en la programación y conocer el espacio requerido para un backup en particular. Además al generar el reporte
+        podrá conocer el tiempo de ejecución para cada uno.</p>
+    <p>*Puede generar un archivo de tipo hoja de cálculo con esta información al final de la tabla.</p>
+
+    <!-- Tabla usuarios -->
+    {% if listadoUBck %}
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Listado general</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Server Name</th>
+                            <th>Database Name</th>
+                            <th>Backup Start</th>
+                            <th>Backup Finish</th>
+                            <th>Backup Size(MB)</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr class="text-center">
+                            <th>Server Name</th>
+                            <th>Database Name</th>
+                            <th>Backup Start</th>
+                            <th>Backup Finish</th>
+                            <th>Backup Size (MB)</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% for resultado in listadoUBck %}
+                        <tr style="font-size: smaller;">
+                            <td>{{ resultado.0 }}</td>
+                            <td>{{ resultado.1 }}</td>
+                            <td class="text-center">{{ resultado.2 }}</td>
+                            <td class="text-center">{{ resultado.3 }}</td>
+                            <td class="text-center">{{ resultado.4 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </br>
+        <a href="{%url 'reportes:reporte_ultimobck' %}">
+            <i class="fas fa-file-export " style="font-size: 1.1rem;">Export to Spreadsheet</i>
+        </a>
+        </div>
+    </div>
+    {% else %}
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Listado general</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Server Name</th>
+                            <th>Database Name</th>
+                            <th>Backup Start</th>
+                            <th>Backup Finish</th>
+                            <th>Backup Size(MB)</th>
+                            <th>Time to Backup</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr class="text-center">
+                            <th>Server Name</th>
+                            <th>Database Name</th>
+                            <th>Backup Start</th>
+                            <th>Backup Finish</th>
+                            <th>Backup Size (MB)</th>
+                            <th>Time to Backup</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h2>No se encuentran registros...</h2>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

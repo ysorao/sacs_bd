@@ -1,0 +1,78 @@
+{%extends 'reportes/jobs_bck.html'%}
+
+{%block title%}Listado de usuarios{%endblock title%}
+
+{%block links%}
+<!-- Nav Item - Pages Collapse Menu -->
+<li class="nav-item active">
+  <a class="nav-link collapsed" href="" style="color: black;">
+    <i class="fas fa-users" style="color: black"></i>
+    <span>Usuarios registrados</span>
+  </a>
+</li>
+
+<!-- Nav Item - Utilities Collapse Menu -->
+<li class="nav-item">
+  <a class="nav-link" href="/usuarios/registrar-usuario/" style="color: black" aria-expanded="true"
+    aria-controls="collapseUtilities">
+    <i class="fas fa-users-cog" style="color: black"></i>
+    <span>Registrar nuevo usuario.</span>
+  </a>
+</li>
+{%endblock links%}
+
+{%block content%}
+<div class="container-fluid">
+  <!-- Encabezado de tabla -->
+  <h1 class="h3 mb-2 text-gray-800" style="text-align: center">Usuarios registrados</h1>
+  <p class="mb-4">Verifique y edite los datos de los usuarios registrados en la aplicación, además puede cambiar el
+    estado del usuario para ACTIVARLO o DESACTIVARLO.</p>
+  <!-- Tabla usuarios -->
+  {% if object_list %}
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Listado General:</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead class="text-center">
+            <tr>
+              <th>Usuario</th>
+              <th>Documento</th>
+              <th>Fecha registro</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tfoot class="text-center">
+            <tr>
+              <th>Usuario</th>
+              <th>Documento</th>
+              <th>Fecha registro</th>
+              <th>Opciones</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            {%for usuario in object_list %}
+            <tr class="text-center">
+              <td>{{usuario.primernombre}} {{usuario.primerapellido}}</td>
+              <td>{{usuario.numerodocumento}}</td>
+              <td>{{usuario.fecharegistro}}</td>
+              <td>
+                <a href="{% url 'usuario:editar_usuario' usuario.idusuario%}">
+                  <i class="fas fa-pencil-alt"></i>
+                  <span>Editar</span>
+                </a>
+              </td>
+            </tr>
+            {%endfor%}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {% else %}
+    <h1>No hay usuarios registrados...</h1>
+    {% endif %}
+  </div>
+</div>
+{% endblock content %}

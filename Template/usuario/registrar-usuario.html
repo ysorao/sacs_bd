@@ -1,0 +1,80 @@
+{%extends 'reportes/jobs_bck.html'%}
+
+{%block title%}Registro de usuarios{%endblock title%}
+
+{%block links%}
+<!-- Nav Item - Pages Collapse Menu -->
+<li class="nav-item">
+  <a class="nav-link collapsed" href="/usuarios/listar_usuarios" style="color: black;">
+    <i class="fas fa-users" style="color: black"></i>
+    <span>Usuarios registrados</span>
+  </a>
+</li>
+
+<!-- Nav Item - Utilities Collapse Menu -->
+<li class="nav-item active">
+  <a class="nav-link" href="" style="color: black" aria-expanded="true"
+    aria-controls="collapseUtilities">
+    <i class="fas fa-users-cog" style="color: black"></i>
+    <span>Registrar nuevo usuario.</span>
+  </a>
+</li>
+{%endblock links%}
+
+{% block content %}
+<!-- <div class="card o-hidden border-0 shadow-lg my-5"> -->
+<div class="card-body p-0">
+  <!-- Nested Row within Card Body -->
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-lg-3 d-none d-lg-block py-0 pr-0">
+      <img src="../../static/img/user.png" alt="" class="py-5" style="width: 100%; height: auto;">
+    </div>
+    <div class="col-lg-7">
+      <div class="p-3">
+        <div class="text-center">
+          <h1 class="h4 text-gray-900 mb-4">Agregar usuario</h1>
+        </div>
+        <form method="POST" class="user">
+          {% csrf_token %}
+          <!--{{ usuarios_form.as_p }}-->
+          <div class="form-group row">
+            <div class="col-sm-6 mb-3 mb-sm-0">
+              <input type="text" class="form-control form-control-user" id="pNombre" placeholder="Primer nombre" name="primernombre">
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control form-control-user" id="sNombre" placeholder="Segundo nombre" name="segundonombre">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-6 mb-3 mb-sm-0">
+              <input type="text" class="form-control form-control-user" id="pApellido" placeholder="Primer apellido" name="primerapellido">
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control form-control-user" id="sNombre" placeholder="Segundo apellido" name="segundoapellido">
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control form-control-user" id="numDoc" placeholder="Número de documento" name="numerodocumento">
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-6 mb-3 mb-sm-0">
+              <input type="password" class="form-control form-control-user" id="contrasena" placeholder="Contraseña" name="contrasena">
+            </div>
+            <!-- <div class="col-sm-6">
+              <input type="password" class="form-control form-control-user" id="repContrasena"
+                placeholder="Repetir contrasena">
+            </div> -->
+          </div>
+          <div class="form-group row py-3">
+            <div class="col-4"></div>
+            <button type="submit" class="btn btn-primary col-lg-4">Registrar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-1"></div>
+  </div>
+</div>
+<!-- </div> -->
+{% endblock content %}

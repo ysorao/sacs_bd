@@ -1,0 +1,27 @@
+
+
+
+
+================
+
+pip install asgiref
+pip install astroid
+pip install colorama
+pip install Django
+pip install django-pyodbc
+pip install django-pyodbc-azure
+pip install django-pyodbc-azure-2019
+pip install et_xmlfile
+pip install isort
+pip install jdcal
+pip install lazy-object-proxy
+pip install mccabe
+pip install mysqlclient
+pip install openpyxl
+pip install pylint
+pip install pyodbc
+pip install pytz
+pip install six
+pip install sqlparse
+pip install toml
+pip install wrapt

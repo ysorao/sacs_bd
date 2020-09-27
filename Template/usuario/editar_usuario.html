@@ -1,0 +1,31 @@
+{%extends 'reportes/jobs_bck.html'%}
+{%block title%}Editar usuario{%endblock title%}
+
+{%block links%}
+<!-- Nav Item - Pages Collapse Menu -->
+<li class="nav-item active">
+  <a class="nav-link collapsed" href="/usuarios/listar_usuarios" style="color: black;">
+    <i class="fas fa-users" style="color: black"></i>
+    <span>Usuarios registrados</span>
+  </a>
+</li>
+
+<!-- Nav Item - Utilities Collapse Menu -->
+<li class="nav-item">
+  <a class="nav-link" href="/usuarios/registrar-usuario/" style="color: black" aria-expanded="true"
+    aria-controls="collapseUtilities">
+    <i class="fas fa-users-cog" style="color: black"></i>
+    <span>Registrar nuevo usuario.</span>
+  </a>
+</li>
+{%endblock links%}
+
+{%block content%}
+<form method="POST">
+
+    {% csrf_token %}
+    {{usuDatos.as_p}}
+    <button type="submit">Guardar cambios</button>
+
+</form>
+{%endblock content%}

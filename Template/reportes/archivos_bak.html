@@ -1,0 +1,206 @@
+{%extends 'reportes/jobs_bck.html'%}
+
+{%block title%}Archivos .bak generados{%endblock title%}
+
+{%block scriptDate%}
+<script>
+    $(function () {
+        $.datepicker.setDefaults($.datepicker.regional["es"]);
+        $("#datepicker2").datepicker({
+            maxDate: '-1',
+            dateFormat: 'dd/mm/y'
+        });
+    });
+</script>
+{%endblock scriptDate%}
+
+{%block links%}
+<li class="nav-item">
+    <a class="nav-link collapsed" href="/reportes/cumplimiento_bck/" style="color: black;">
+        <i class="fas fa-calendar-check" style="color: black; font-size: 0.8rem;"></i>
+        <span>Ejecución bck programados</span>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link collapsed" href="/reportes/jobs_bck/" style="color: black;">
+        <i class="fas fa-clipboard-check" style="color: black;"></i>
+        <span>Resultado jobs de backup</span>
+    </a>
+</li>
+
+<li class="nav-item active">
+    <a class="nav-link" href="">
+        <i class="fas fa-copy" style="color: black"></i>
+        <span style="color: black">Archivos .bak generados</span>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="/reportes/estado_db/" style="color: black" aria-expanded="true"
+        aria-controls="collapseUtilities">
+        <i class="fas fa-database" style="color: black"></i>
+        <span>Estado de las B.D.</span>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="/reportes/ultimos_bck/">
+        <i class="fas fa-clone" style="color: black;"></i>
+        <span style="color: black">Último backup de cada B.D.</span>
+    </a>
+</li>
+{%endblock links%}
+
+{% block content%}
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-1 text-gray-800">Archivos .bak generados</h1>
+    </br>
+    <p class="mb-4">Aquí se muestran los archivos *.bak generados en las diferentes instancias SQL durante la fecha
+        inmediatamente anterior a la actual, además podrá generar un informe de tipo hoja de cálculo al final de la
+        tabla
+        para la fecha seleccionada, en donde adicionalmente podrá ver la ruta de almacenamiento de cada copia de
+        seguridad.
+    </p>
+
+
+    <!-- Tabla de datos -->
+    {% if bakGen %}
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Resultados de la ejecución</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <!-- Formulario para elegir la fecha que se renderiza -->
+                <!-- <form action="{% url 'reportes:jobs_bck' %}" method="get">
+                                        <div class="row">
+                                            <div class="col-3"></div>
+                                            <label for="datepicker">Select Date:</label>
+                                            <div class="col-2 align-items-center">
+                                                <input type="text" name="fecha2" onkeydown="return false" class="form-control" id="datepicker"></input>
+                                            </div>
+                                            <button type="submit" class="col-2 form-control">Consultar</button>
+                                        </div>
+                                    </form> -->
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Server Name</th>
+                            <th>Database Name</th>
+                            <th>Date</th>
+                            <th>Hour</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr class="text-center">
+                            <th>Server Name</th>
+                            <th>Database Name</th>
+                            <th>Date</th>
+                            <th>Hour</th>
+                            <th>Type</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% for bak in bakGen %}
+                        <tr style="font-size: smaller;">
+                            <td>{{ bak.1 }}</td>
+                            <td>{{ bak.2 }}</td>
+                            <td class="text-center">{{ bak.3 }}</td>
+                            <td class="text-center">{{ bak.4 }}</td>
+                            <td class="text-center">{{ bak.5 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            </br>
+            <form action="{% url 'reportes:reporte_genBak' %}" method="get" autocomplete="off">
+                <div class="row">
+                    <div class="col-3"></div>
+                    <label for="datepicker2">Select Date:</label>
+                    <div class="col-2 align-items-center">
+                        <input type="text" name="fecha" onkeydown="return false" class="form-control"
+                            id="datepicker2"></input>
+                    </div>
+                    <button type="submit" class="col-2 form-control">
+                        <i class="fas fa-file-export ">
+                            <span style="font-size: small;">Export to Spreadsheet</span>
+                        </i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% else %}
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Resultados de la ejecución</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <!-- Formulario para elegir la fecha que se renderiza -->
+                <!-- <form action="{% url 'reportes:jobs_bck' %}" method="get">
+                                            <div class="row">
+                                                <div class="col-3"></div>
+                                                <label for="datepicker">Select Date:</label>
+                                                <div class="col-2 align-items-center">
+                                                    <input type="text" name="fecha2" onkeydown="return false" class="form-control" id="datepicker"></input>
+                                                </div>
+                                                <button type="submit" class="col-2 form-control">Consultar</button>
+                                            </div>
+                                        </form> -->
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Outcome</th>
+                            <th>Server Name</th>
+                            <th>Date</th>
+                            <th>Job Name</th>
+                            <th># Step</th>
+                            <th>Step Name</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr class="text-center">
+                            <th>Outcome</th>
+                            <th>Server Name</th>
+                            <th>Date</th>
+                            <th>Job Name</th>
+                            <th># Step</th>
+                            <th>Step Name</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr>
+                            <td>No existen datos para el día consultado</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            </br>
+            <form action="{% url 'reportes:reporte_genBak' %}" method="get" autocomplete="off">
+                <div class="row">
+                    <div class="col-3"></div>
+                    <label for="datepicker2">Select Date:</label>
+                    <div class="col-2 align-items-center">
+                        <input type="text" name="fecha" onkeydown="return false" class="form-control"
+                            id="datepicker2"></input>
+                    </div>
+                    <button type="submit" class="col-2 form-control">
+                        <i class="fas fa-file-export ">
+                            <span style="font-size: small;">Export to Spreadsheet</span>
+                        </i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+</div>
+<!-- /.container-fluid -->
+{% endblock content%}
